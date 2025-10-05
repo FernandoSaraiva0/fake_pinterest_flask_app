@@ -1,0 +1,46 @@
+Aula 6: 
+
+The flask blocks turn easy html manipulation. 
+
+sintaxe: 
+
+{% block name %}
+{% endblock %}
+
+example: 
+
+{% block body %}
+    <body>
+        <h1>Benvindo ao Pinterest APP</h1>
+    </body>
+{% endblock %}
+
+now i can get the basic structure of html to the index page,
+and make minimal chances on html sucudary.
+
+Aula 7: 
+Basic structure to project flask 
+    ProjectName
+    ---main.py
+    ---ProjectNameFlask
+    |--- Templates {HTML dir}
+    |--- __init__.py {Base file flask initialization}
+    |--- forms.py {forms for project}
+    |--- models.py {database structure}
+    |--- routes.py {dinamics routes for project}
+
+! Important
+__init__.py depends on routes.py and routes.py depends on __init__.py
+
+on main.py we go make import:
+from ProjectNameFlask import app (is on file __init__.py)
+
+on routes.py we make import: 
+from ProjectNameFlask import app
+
+on __init__.py we go make importe of routes after declaration of app.
+
+Ex: 
+app = Flask (__name__)
+
+from ProjectNameFlask import routes
