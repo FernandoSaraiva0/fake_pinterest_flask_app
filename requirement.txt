@@ -1,2 +1,6 @@
 falsk
 flask-sqlalchemy
+flask-login
+flask-bcrypt
+flask-wtf
+email_validator

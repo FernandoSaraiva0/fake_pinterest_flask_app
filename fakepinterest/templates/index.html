@@ -14,6 +14,27 @@
 {% block body %}
 <body>
     <h1>Benvindo ao Pinterest APP</h1>
+
+    <form method="POST">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.email.label }}<br>
+            {{ form.email(size=32) }}<br>
+            {% for error in form.email.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.senha.label }}<br>
+            {{ form.senha(size=32) }}<br>
+            {% for error in form.senha.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.lembrar_me() }} {{ form.lembrar_me.label }}</p>
+        <p>{{ form.submit() }}</p>
+        <p>Não tem uma conta? <a href="{{ url_for('criar_conta') }}">Crie uma agora!</a></p>
+    </form>
 </body>
 {% endblock %}
 </html>

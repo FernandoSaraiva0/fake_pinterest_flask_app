@@ -1,8 +1,12 @@
 # Creating database tables
-from fakepinterest import database
+from fakepinterest import database, loginManager
 from datetime import datetime
+from flask_login import UserMixin
 
-class Usuario(database.Model):
+def load_user(user_id):
+    return Usuario.query.get(int(user_id))
+
+class Usuario(database.Model, UserMixin):
     id=database.Column(database.Integer, primary_key=True)
     username=database.Column(database.String(20), nullable=False)
     email=database.Column(database.String(120), nullable=False, unique=True)
