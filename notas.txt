@@ -44,3 +44,10 @@ Ex:
 app = Flask (__name__)
 
 from ProjectNameFlask import routes
+
+Aula 9: 
+
+Login - Utiliza Flask Login 
+
+busca no banco com Flask  
+    Table.query.geo(id)
