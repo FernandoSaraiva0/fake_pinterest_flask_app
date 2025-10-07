@@ -1,4 +1,4 @@
-from falsk_wtf import FlaskForm
+from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, Length, EqualTo
 from fakepinterest.models import Usuario
@@ -10,7 +10,7 @@ class FormLogin:
 class FormCriarConta(FlaskForm):
     EmailField = StringField('Email', validators=[DataRequired(), Email()])
     UsernameField = StringField('Nome de Usuário', validators=[DataRequired(), Length(min=3, max=25)])
-    PasswordField = PasswordField('Senha', validators=[DataRequired(), Length(min=6)])
+    PasswordField1 = PasswordField('Senha', validators=[DataRequired(), Length(min=6)])
     PasswordField2 = PasswordField('Confirme a Senha', validators=[DataRequired(), Length(min=6), EqualTo('PasswordField', message='As senhas devem coincidir.')])
     SubmitField = SubmitField('Criar Conta')
 
