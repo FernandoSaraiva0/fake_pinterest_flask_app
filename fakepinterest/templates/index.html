@@ -17,13 +17,7 @@
 
     <form method="POST">
         {{ form.csrf_token }}
-
-        {{ form.email.label() }}
-        {{ form.email(size=32) }}
-        <br>
-        <br>
-        {{ form.password1.label() }}
-        {{ form.password1(size=32) }}
+        {{ form.email() }}
         <br>
     </form> 
 </body>

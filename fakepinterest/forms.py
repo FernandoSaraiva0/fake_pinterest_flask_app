@@ -1,11 +1,11 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, Email, Length, EqualTo
+from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from fakepinterest.models import Usuario
 class FormLogin:
-    EmailField = StringField('Email', validators=[DataRequired(), Email()])
-    PasswordField = PasswordField('Senha', validators=[DataRequired(), Length(min=6)])
-    SubmitField = SubmitField('Entrar')
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    senha = PasswordField('Senha', validators=[DataRequired(), Length(min=6)])
+    botao= SubmitField('Entrar')
 
 class FormCriarConta(FlaskForm):
     EmailField = StringField('Email', validators=[DataRequired(), Email()])
@@ -18,4 +18,4 @@ class FormCriarConta(FlaskForm):
         # Aqui você pode adicionar a lógica para verificar se o nome de usuário já existe no banco de dados
         usuario = Usuario.query.filter_by(email=EmailField.data).first()
         if usuario:
-            raise ValidationError('Este email já está em uso. Por favor, escolha outro.')       
+            return ValidationError('Este email já está em uso. Por favor, escolha outro.')       

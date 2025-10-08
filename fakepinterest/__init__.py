@@ -13,3 +13,9 @@ loginManager = LoginManager(app)
 loginManager.login_view = 'homepage'
 
 from fakepinterest import routes
+
+# solution for error user_loader not working
+@loginManager.user_loader
+def load_user(user_id):
+    from fakepinterest.models import Usuario
+    return Usuario.query.get(int(user_id))

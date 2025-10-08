@@ -4,12 +4,12 @@ from flask_login import login_required
 from fakepinterest.forms import FormCriarConta, FormLogin
 from fakepinterest.models import Usuario, Foto
 
-@app.route("/")
+@app.route("/", methods=['GET', 'POST'])
 def homepage():
     formLogin = FormLogin()
     return render_template("index.html", form=formLogin)
 
-@app.route("/criar_conta")
+@app.route("/criar_conta", methods=['GET', 'POST'])
 def criar_conta():
     formCriarConta = FormCriarConta()
     if formCriarConta.validate_on_submit():
