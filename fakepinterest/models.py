@@ -3,6 +3,7 @@ from fakepinterest import database, loginManager
 from datetime import datetime
 from flask_login import UserMixin
 
+@loginManager.user_loader
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
 
@@ -10,8 +11,8 @@ class Usuario(database.Model, UserMixin):
     id=database.Column(database.Integer, primary_key=True)
     username=database.Column(database.String(20), nullable=False)
     email=database.Column(database.String(120), nullable=False, unique=True)
-    senha=database.Column(database.String(60), nullable=False)
-    fotos=database.relationship('Foto', backref='username', lazy=True)
+    password=database.Column(database.String(60), nullable=False)
+    fotos=database.relationship('Foto', backref='usuario', lazy=True)
 
 class Foto (database.Model):
     id=database.Column(database.Integer, primary_key=True)

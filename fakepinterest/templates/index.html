@@ -15,11 +15,19 @@
 <body>
     <h1>Benvindo ao Pinterest APP</h1>
 
+    {% block formulario %} 
     <form method="POST">
         {{ form.csrf_token }}
+        {{ form.email.label }}
         {{ form.email() }}
+
+        {{ form.senha.label }}
+        {{ form.senha() }}
+
+        {{ form.botao() }}
         <br>
     </form> 
+    {% endblock %}
 </body>
 {% endblock %}
 </html>

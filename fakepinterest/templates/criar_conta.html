@@ -4,10 +4,23 @@
 Criar Conta - FakePinterest
 {% endblock %}
 
-{% block body %}
-<body>
-    <h1>Perfil do Usuário: {{username}}</h1>
+{% block formulario %}
+<form method="POST">
+        {{ form.csrf_token }}
 
-    <a href="{{ url_for('homepage') }}">Sair</a>
-</body>
+        {{ form.EmailField.label }}
+        {{ form.EmailField() }}
+
+        {{form.UsernameField.label }}
+        {{ form.UsernameField() }}
+
+        {{ form.PasswordField1.label }}
+        {{ form.PasswordField1() }}
+
+        {{ form.PasswordField2.label }}
+        {{ form.PasswordField2() }}
+
+        {{ form.SubmitField() }}
+        <br>
+    </form> 
 {% endblock %}
