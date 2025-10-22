@@ -18,13 +18,13 @@
     {% block formulario %} 
     <form method="POST">
         {{ form.csrf_token }}
-        {{ form.email.label }}
-        {{ form.email() }}
+        {{ form.EmailField.label }}
+        {{ form.EmailField() }}
 
-        {{ form.senha.label }}
-        {{ form.senha() }}
+        {{ form.PasswordField.label }}
+        {{ form.PasswordField() }}
 
-        {{ form.botao() }}
+        {{ form.SubmitField() }}
         <br>
     </form> 
     {% endblock %}

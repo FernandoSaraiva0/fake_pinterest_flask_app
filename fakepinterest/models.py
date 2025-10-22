@@ -3,6 +3,7 @@ from fakepinterest import database, loginManager
 from datetime import datetime
 from flask_login import UserMixin
 
+#Function to load user for login management
 @loginManager.user_loader
 def load_user(user_id):
     return Usuario.query.get(int(user_id))
