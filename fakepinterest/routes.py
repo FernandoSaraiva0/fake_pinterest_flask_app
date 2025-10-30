@@ -1,6 +1,6 @@
 from flask import render_template, url_for, redirect, flash
 from fakepinterest import app, database, bcrypt
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 from fakepinterest.forms import FormCriarConta, FormLogin
 from fakepinterest.models import Usuario, Foto
 
@@ -16,9 +16,9 @@ def homepage():
         if usuario and bcrypt.check_password_hash(
             usuario.password, formLogin.PasswordField.data
             ):
-            login_user(usuario, remember=formLogin.LembreMeField.data)
+            login_user(usuario)
             flash(f'Login realizado com sucesso! Bem-vindo(a) de volta, {usuario.username}!', 'success')
-            return redirect(url_for('perfil', id_usuario=usuario.username))
+            return redirect(url_for('perfil', id_usuario=usuario.id))
         else:
             flash('Falha no login. Verifique seu email e senha.', 'danger') 
 
@@ -60,10 +60,10 @@ def criar_conta():
             # DEBUG: Log the username being registered
             print('Cadastrando o usuário:', usuario.username)
             #Login the user after account creation
-            login_user(usuario, remember=True)
+            login_user(usuario, remember=True) ## Remember me is set to True by default here - armazena o login nos cookies
             flash(f'Conta criada com sucesso! Bem-vindo(a), {usuario.username}!', 'success')
 
-            return redirect(url_for('perfil', usuario=usuario.username))
+            return redirect(url_for('perfil', usuario=usuario.id))
         
         except Exception as e:
             database.session.rollback()
@@ -79,4 +79,16 @@ def criar_conta():
 @app.route("/perfil/<id_usuario>")
 @login_required
 def perfil(id_usuario):
-    return render_template("perfil.html", usuario=id_usuario)
+    if int(id_usuario) == int(current_user.id):
+        return render_template("perfil.html", username=current_user.username)
+    else:
+        usuario = Usuario.query.get(int(id_usuario))
+        return render_template("perfil.html", usuario=usuario)
+
+# Logout route 
+@app.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash('Você saiu da sua conta com sucesso.', 'success')
+    return redirect(url_for('homepage'))
