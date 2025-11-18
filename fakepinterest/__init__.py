@@ -12,6 +12,7 @@ db_name = 'fakepinterest.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_name
 #Secret key for forms - for security purposes
 app.config['SECRET_KEY'] = "7bd3cf5ef78b72af8adf87953fd3f787"
+app.config['UPLOAD_FOLDER'] = 'fakepinterest/static/fotos_posts'
 
 database = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
