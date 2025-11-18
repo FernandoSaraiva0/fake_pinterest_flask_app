@@ -79,11 +79,11 @@ def criar_conta():
 @app.route("/perfil/<id_usuario>")
 @login_required
 def perfil(id_usuario):
-    if int(id_usuario) == int(current_user.id):
+    if int(id_usuario) == int(current_user.id): #Verifica se o usuário está acessando seu próprio perfil
         return render_template("perfil.html", username=current_user.username)
-    else:
+    else: #Acessando o perfil de outro usuário
         usuario = Usuario.query.get(int(id_usuario))
-        return render_template("perfil.html", usuario=usuario)
+        return render_template("perfil.html", usuario=usuario) #Passa o objeto usuário para o template
 
 # Logout route 
 @app.route("/logout")
