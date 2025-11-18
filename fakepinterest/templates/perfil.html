@@ -7,14 +7,26 @@ Perfil - {{username}}
 {% block body %}
 <body>
     <h1>Perfil do Usuário: {{username}}</h1>
+    {% if form %}
+    <h2>Postar uma nova foto</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {{ form.csrf_token }}
+        {{ form.PhotoField.label }}
+        {{ form.PhotoField() }} <br>
 
+        {{ form.SubmitField() }}
+    </form>
+    {% endif %}
+    
     <a href="{{ url_for('logout') }}">Sair</a>
 
+    {% for foto in fotos %}
     <img
-        src="{{ url_for('static', filename='fotos_posts/default.png') }}"
+        src="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem_url)) }}"
         class="img-fluid rounded-top"
         alt=""
     />
+    {% endfor %}
     
 </body>
 {% endblock %}

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
+from wtforms import StringField, PasswordField, SubmitField, FileField
 from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
 from fakepinterest.models import Usuario
 class FormLogin(FlaskForm):
@@ -19,3 +19,8 @@ class FormCriarConta(FlaskForm):
 #        usuario = Usuario.query.filter_by(email=EmailField.data).first()
 #        if usuario:
 #            raise ValidationError('Este email já está em uso. Por favor, escolha outro.')       
+
+class FormPostPhoto(FlaskForm):
+    PhotoField = FileField('Foto', validators=[DataRequired()])
+    #DescriptionField = StringField('Descrição', validators=[Length(max=200)])
+    SubmitField = SubmitField('Postar Foto')

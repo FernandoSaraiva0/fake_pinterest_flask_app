@@ -1,8 +1,10 @@
 from flask import render_template, url_for, redirect, flash
 from fakepinterest import app, database, bcrypt
 from flask_login import login_required, login_user, logout_user, current_user
-from fakepinterest.forms import FormCriarConta, FormLogin
+from fakepinterest.forms import FormCriarConta, FormLogin, FormPostPhoto
 from fakepinterest.models import Usuario, Foto
+import os
+from werkzeug.utils import secure_filename # For handling file uploads
 
 @app.route("/", methods=['GET', 'POST'])
 def homepage():
@@ -76,14 +78,30 @@ def criar_conta():
         
     return render_template("criar_conta.html", form=formCriarConta)
 
-@app.route("/perfil/<id_usuario>")
+@app.route("/perfil/<id_usuario>", methods=['GET', 'POST']) 
 @login_required
 def perfil(id_usuario):
     if int(id_usuario) == int(current_user.id): #Verifica se o usuário está acessando seu próprio perfil
-        return render_template("perfil.html", username=current_user.username)
+        #Funcionalidade de postar foto
+        form_foto = FormPostPhoto()
+            # Handle photo posting
+        if form_foto.validate_on_submit():
+            nova_foto = form_foto.PhotoField.data
+            secure_filename_nome = secure_filename(nova_foto.filename)
+            caminho_salvar = os.path.join(os.path.abspath(os.path.dirname(__file__)), app.config["UPLOAD_FOLDER"], secure_filename_nome)
+            nova_foto.save(caminho_salvar)
+            # Create new Foto instance
+            foto = Foto(
+                image_url=secure_filename_nome,
+                id_usuario=current_user.id
+            )
+            database.session.add(foto)
+            database.session.commit()
+            flash('Foto postada com sucesso!', 'success')
+        return render_template("perfil.html", username=current_user.username, form=form_foto)
     else: #Acessando o perfil de outro usuário
         usuario = Usuario.query.get(int(id_usuario))
-        return render_template("perfil.html", usuario=usuario) #Passa o objeto usuário para o template
+        return render_template("perfil.html", usuario=usuario, form=None) #Passa o objeto usuário para o template
 
 # Logout route 
 @app.route("/logout")
